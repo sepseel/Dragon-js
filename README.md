@@ -1,2 +1,2 @@
 # blank-js
-## Pong
+## Dragon curve fractal

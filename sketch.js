@@ -1,54 +1,46 @@
+var seq;
+var len;
+var iters;
 
 function setup() {
-  // runs once on startup
-  createCanvas(600, 400);
-  var control = sequence(3);
-  var test = reqseq([1], 3);
-  lines = [new Segment(100, 200, 500, 200)];
+	// runs once on startup
+	createCanvas(windowWidth, windowHeight);
+	start = new Segment(150, 200, 450, 200);
+	iters = 0;
+	seq = sequence(iters);
+	len = 10
 }
 
 function draw() {
-  // repeats every frame
-  background(51);
-  strokeWeight(2)
-  
-  for (var i = 0; i < lines.length; i++) {
-  	if (lines.toDel) {
-  		lines.splice(i, 1);
-  		i--;
-  	} else {
-  		lines[i].show();
-  	}
-  }
-  lines[0].sep();
-  //print(lines)
-}
-
-
-function reqseq(curve, folds=1) {
-	if (folds > 1) {
-		var nextcurve = curve.slice();
-		nextcurve.push(1);
-		curve = curve.reverse();
-		for (var i = 0; i < curve.length; i++) {
-			nextcurve.push(curve[i] * -1);
-		}
-		return reqseq(nextcurve, folds-1)
-	} else {
-	 return curve
+  	// repeats every frame
+	background(51);
+	translate(mouseX,mouseY);
+	strokeWeight(2);
+	for (var i = 0; i < seq.length; i++) {
+		translate(len, len);
+		rotate(PI/2 * seq[i]);
+		line(0, 0, len, len);
 	}
+
 }
 
+function mouseClicked() {
+	iters += 1;
+	len = 30 / iters
+	seq = sequence(iters);
+}
 
-
-
-
-
-
-
-
-
-
+function nextseq(curve) {
+	// R = 1
+	// L = -1
+	var nextcurve = curve.slice();
+	nextcurve.push(1);
+	curve = curve.reverse();
+	for (var i = 0; i < curve.length; i++) {
+		nextcurve.push(curve[i] * -1);
+	}
+	 return curve;
+}
 
 
 
